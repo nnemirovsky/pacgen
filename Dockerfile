@@ -11,7 +11,6 @@ LABEL maintainer="Nikita Nemirovsky vaze.legend@gmail.com"
 VOLUME /app/data
 WORKDIR /app
 COPY --from=build /app/bin/* .
-COPY entrypoint.sh .
 COPY migrations migrations
 RUN apk add --no-cache curl
 USER 1001:1001

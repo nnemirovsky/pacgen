@@ -1,0 +1,7 @@
+.gitignore
+.github
+.git
+.idea
+compose.dev.yml
+compose.yml
+.dockerignore
