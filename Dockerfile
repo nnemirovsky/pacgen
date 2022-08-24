@@ -7,6 +7,7 @@ RUN make build
 
 
 FROM alpine:latest
+LABEL maintainer="Nikita Nemirovsky vaze.legend@gmail.com"
 VOLUME /app/data
 WORKDIR /app
 COPY --from=build /app/bin/* .
