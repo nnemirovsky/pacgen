@@ -1,0 +1,6 @@
+function FindProxyForURL(url, host) {
+	{{- range .}}
+	if (/{{.Regex}}/.test(host)) return '{{.Action}}';
+	{{- end}}
+	return 'DIRECT';
+}

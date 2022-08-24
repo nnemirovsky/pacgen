@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  server:
+    build: .
+    ports:
+      - "127.0.0.1:8889:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      APP_PORT: 8080
+      APP_LOG_LEVEL: "debug"
+      APP_USER: "admin"
+      APP_PASSWORD: "password"
+    restart: unless-stopped
+    depends_on:
+      db_migration:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:$${APP_PORT}/ping" ]
+      interval: 1m
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  db_migration:
+    build: .
+    command: "./migrator up"
+    volumes:
+      - ./data:/app/data
