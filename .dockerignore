@@ -4,4 +4,5 @@
 .idea
 compose.dev.yml
 compose.yml
+Dockerfile
 .dockerignore
