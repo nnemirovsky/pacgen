@@ -165,7 +165,7 @@ func (h *ProxyProfileHandler) Delete(w http.ResponseWriter, r *http.Request) {
 			h.logger.Debug().Err(err).Send()
 			Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)
 			return
-		case *errs.EntityReferencedError:
+		case *errs.EntityStillReferencedError:
 			h.logger.Debug().Err(err).Send()
 			Render(w, r, rest.ConflictResponse(err.Error()), h.logger)
 			return

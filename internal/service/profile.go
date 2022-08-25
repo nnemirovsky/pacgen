@@ -120,7 +120,7 @@ func (s *ProxyProfileService) Delete(ctx context.Context, id int) error {
 		case *errs.EntityNotFoundError:
 			s.logger.Debug().Err(err).Send()
 			return err
-		case *errs.EntityReferencedError:
+		case *errs.EntityStillReferencedError:
 			s.logger.Debug().Err(err).Send()
 			return err
 		default:

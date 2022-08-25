@@ -101,7 +101,7 @@ func (r *ProxyProfileRepository) Delete(ctx context.Context, id int) error {
 	result, err := r.db.ExecContext(ctx, cmd, id)
 	if err != nil {
 		if s, ok := err.(sqlite3.Error); ok && s.Code == sqlite3.ErrConstraint {
-			err := &errs.EntityReferencedError{Name: "proxy profile", Key: "id", Value: id}
+			err := &errs.EntityStillReferencedError{Name: "proxy profile", Key: "id", Value: id}
 			r.logger.Debug().Err(err).Send()
 			return err
 		}

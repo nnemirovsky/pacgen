@@ -10,21 +10,14 @@ build:
 	go build -v -o bin/generator cmd/generator/main.go
 
 test:
-	go test -v ./...
-
-gofmt:
-	go fmt ./...
-
-govet:
-	go vet ./...
-
-gofix:
-	go fix ./...
+	go test -v -race ./...
 
 # --- development only ---
 
+lint:
+	docker run --rm -it -v $(ROOT_DIR):/app -w /app golangci/golangci-lint:v1.49.0 golangci-lint run -v -E gofmt
+
 build_img:
-	#docker buildx build --no-cache --platform linux/amd64,linux/arm64 --load -t pacgen:latest .
 	docker build --no-cache -t pacgen:latest .
 
 serve:

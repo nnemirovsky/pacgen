@@ -54,7 +54,7 @@ func generatePACFile(rules []model.Rule) error {
 	if err != nil {
 		return err
 	}
-	defer func() { _ = file.Close() }()
+	defer file.Close()
 
 	return generatePAC(file, rules)
 }

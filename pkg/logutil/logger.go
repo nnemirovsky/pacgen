@@ -18,9 +18,10 @@ const (
 )
 
 var (
-	stderr   io.Writer
-	Logger   zerolog.Logger
-	LayerKey = "layer"
+	stderr        io.Writer
+	Logger        zerolog.Logger
+	DiscardLogger = zerolog.New(io.Discard)
+	LayerKey      = "layer"
 )
 
 func init() {

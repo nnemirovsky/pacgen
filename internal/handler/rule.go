@@ -87,7 +87,13 @@ func (h *RuleHandler) Create(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Msg("Error occurred while converting rule entity to corresponding model")
 	}
 
-	if err := h.service.Create(r.Context(), &ruleModel); err != nil {
+	err = h.service.Create(r.Context(), &ruleModel)
+	if err == errs.InvalidReferenceError {
+		h.logger.Debug().Err(err).Send()
+		Render(w, r, rest.ConflictResponse(err.Error()), h.logger)
+		return
+	}
+	if err != nil {
 		h.logger.Error().Err(err).Msg("Error occurred while creating rule")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -113,7 +119,13 @@ func (h *RuleHandler) Update(w http.ResponseWriter, r *http.Request) {
 	}
 	ruleModel.ID = id
 
-	if err := h.service.Update(r.Context(), ruleModel); err != nil {
+	err = h.service.Update(r.Context(), ruleModel)
+	if err == errs.InvalidReferenceError {
+		h.logger.Debug().Err(err).Send()
+		Render(w, r, rest.ConflictResponse(err.Error()), h.logger)
+		return
+	}
+	if err != nil {
 		if _, ok := err.(*errs.EntityNotFoundError); ok {
 			h.logger.Debug().Err(err).Send()
 			Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)

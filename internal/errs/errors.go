@@ -8,6 +8,7 @@ import (
 var (
 	RepositoryUnknownError = errors.New("unknown error in the repository, please check the logs")
 	ServiceUnknownError    = errors.New("unknown error in the service, please check the logs")
+	InvalidReferenceError  = errors.New("invalid reference")
 )
 
 type EntityNotFoundError struct {
@@ -50,7 +51,7 @@ func (e *EntityAlreadyExistsError) Error() string {
 	return fmt.Sprintf("%s with %s %v already exists", e.Name, e.Key, e.Value)
 }
 
-type EntityReferencedError struct {
+type EntityStillReferencedError struct {
 	// Name of entity
 	Name string
 	// Key of entity identifier (e.g. "name", "id"). Will be used in error message.
@@ -59,13 +60,13 @@ type EntityReferencedError struct {
 	Value any
 }
 
-func (e *EntityReferencedError) Error() string {
+func (e *EntityStillReferencedError) Error() string {
 	if e.Name == "" {
 		e.Name = "entity"
 	}
 
 	if e.Key == "" || e.Value == nil {
-		return fmt.Sprintf("%s is referenced", e.Name)
+		return fmt.Sprintf("%s is still referenced", e.Name)
 	}
-	return fmt.Sprintf("%s with %s %v is referenced", e.Name, e.Key, e.Value)
+	return fmt.Sprintf("%s with %s %v is still referenced", e.Name, e.Key, e.Value)
 }

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/jmoiron/sqlx"
+	"github.com/mattn/go-sqlite3"
 	"github.com/nnemirovsky/pacgen/internal/errs"
 	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/rs/zerolog"
@@ -78,11 +79,18 @@ func (r *RuleRepository) GetByID(ctx context.Context, id int) (model.Rule, error
 
 func (r *RuleRepository) Create(ctx context.Context, rule *model.Rule) error {
 	cmd := `INSERT INTO rules (regex, proxy_profile_id) VALUES (:regex, :proxy_profile.id) RETURNING id`
+
 	result, err := r.db.NamedExecContext(ctx, cmd, rule)
+	if e, ok := err.(sqlite3.Error); ok && e.Code == sqlite3.ErrConstraint {
+		err = errs.InvalidReferenceError
+		r.logger.Debug().Err(err).Msg("Unknown proxy profile")
+		return err
+	}
 	if err != nil {
 		r.logger.Error().Err(err).Msg("Error occurred while creating rule")
 		return errs.RepositoryUnknownError
 	}
+
 	id, err := result.LastInsertId()
 	if err != nil {
 		r.logger.Error().Err(err).Msg("Error occurred while retrieving created rule id")
@@ -94,7 +102,13 @@ func (r *RuleRepository) Create(ctx context.Context, rule *model.Rule) error {
 
 func (r *RuleRepository) Update(ctx context.Context, rule model.Rule) error {
 	cmd := `UPDATE rules SET regex = :regex, proxy_profile_id = :proxy_profile.id WHERE id = :id`
+
 	result, err := r.db.NamedExecContext(ctx, cmd, rule)
+	if e, ok := err.(sqlite3.Error); ok && e.Code == sqlite3.ErrConstraint {
+		err = errs.InvalidReferenceError
+		r.logger.Debug().Err(err).Msg("Unknown proxy profile")
+		return err
+	}
 	if err != nil {
 		r.logger.Error().Err(err).Msg("Error occurred while updating rule")
 		return errs.RepositoryUnknownError

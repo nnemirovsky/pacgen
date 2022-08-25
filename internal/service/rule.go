@@ -64,6 +64,10 @@ func (s *RuleService) GetByID(ctx context.Context, id int) (model.Rule, error) {
 
 func (s *RuleService) Create(ctx context.Context, rule *model.Rule) error {
 	err := s.repo.Create(ctx, rule)
+	if err == errs.InvalidReferenceError {
+		s.logger.Debug().Err(err).Send()
+		return err
+	}
 	if err != nil {
 		s.logger.Error().Err(err).Msg("Error occurred while creating rule")
 		return errs.ServiceUnknownError
@@ -86,11 +90,15 @@ func (s *RuleService) Create(ctx context.Context, rule *model.Rule) error {
 
 func (s *RuleService) Update(ctx context.Context, rule model.Rule) error {
 	err := s.repo.Update(ctx, rule)
+	if err == errs.InvalidReferenceError {
+		s.logger.Debug().Err(err).Send()
+		return err
+	}
+	if _, ok := err.(*errs.EntityNotFoundError); ok {
+		s.logger.Debug().Err(err).Send()
+		return err
+	}
 	if err != nil {
-		if _, ok := err.(*errs.EntityNotFoundError); ok {
-			s.logger.Debug().Err(err).Send()
-			return err
-		}
 		s.logger.Error().Err(err).Msg("Error occurred while updating rule")
 		return errs.ServiceUnknownError
 	}
