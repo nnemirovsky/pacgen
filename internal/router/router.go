@@ -4,10 +4,10 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
+	"github.com/nnemirovsky/pacgen/pkg/rest"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/hlog"
 	"net/http"
-	"pacgen/pkg/rest"
 	"time"
 )
 

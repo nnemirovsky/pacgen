@@ -3,8 +3,8 @@ package handler
 import (
 	"errors"
 	"fmt"
-	"pacgen/internal/model"
-	"pacgen/pkg/regexp"
+	"github.com/nnemirovsky/pacgen/internal/model"
+	"github.com/nnemirovsky/pacgen/pkg/regexp"
 )
 
 type RuleR struct {

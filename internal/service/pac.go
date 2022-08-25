@@ -2,11 +2,11 @@ package service
 
 import (
 	"context"
+	"github.com/nnemirovsky/pacgen/internal/model"
+	"github.com/nnemirovsky/pacgen/pkg/gen"
 	"github.com/rs/zerolog"
 	"io"
 	"os"
-	"pacgen/internal/model"
-	"pacgen/pkg/gen"
 )
 
 type PACService struct {

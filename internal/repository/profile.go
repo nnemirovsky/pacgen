@@ -6,9 +6,9 @@ import (
 	"errors"
 	"github.com/jmoiron/sqlx"
 	"github.com/mattn/go-sqlite3"
+	"github.com/nnemirovsky/pacgen/internal/errs"
+	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/rs/zerolog"
-	"pacgen/internal/errs"
-	"pacgen/internal/model"
 )
 
 type ProxyProfileRepository struct {

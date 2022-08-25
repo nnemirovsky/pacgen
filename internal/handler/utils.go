@@ -4,9 +4,9 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"
+	"github.com/nnemirovsky/pacgen/pkg/rest"
 	"github.com/rs/zerolog"
 	"net/http"
-	"pacgen/pkg/rest"
 	"strconv"
 )
 

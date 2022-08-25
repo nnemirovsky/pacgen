@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/jmoiron/sqlx"
+	"github.com/nnemirovsky/pacgen/internal/errs"
+	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/rs/zerolog"
-	"pacgen/internal/errs"
-	"pacgen/internal/model"
 )
 
 type RuleRepository struct {

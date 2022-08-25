@@ -1,4 +1,4 @@
-module pacgen
+module github.com/nnemirovsky/pacgen
 
 go 1.19
 

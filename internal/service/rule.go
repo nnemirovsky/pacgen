@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
+	"github.com/nnemirovsky/pacgen/internal/errs"
+	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/rs/zerolog"
-	"pacgen/internal/errs"
-	"pacgen/internal/model"
 	"time"
 )
 

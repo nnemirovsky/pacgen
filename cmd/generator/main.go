@@ -4,9 +4,9 @@ import (
 	"context"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
-	"pacgen/internal/repository"
-	"pacgen/internal/service"
-	"pacgen/pkg/logutil"
+	"github.com/nnemirovsky/pacgen/internal/repository"
+	"github.com/nnemirovsky/pacgen/internal/service"
+	"github.com/nnemirovsky/pacgen/pkg/logutil"
 	"time"
 )
 

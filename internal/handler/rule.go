@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-chi/render"
+	"github.com/nnemirovsky/pacgen/internal/errs"
+	"github.com/nnemirovsky/pacgen/internal/model"
+	"github.com/nnemirovsky/pacgen/pkg/rest"
 	"github.com/rs/zerolog"
 	"net/http"
-	"pacgen/internal/errs"
-	"pacgen/internal/model"
-	"pacgen/pkg/rest"
 )
 
 type RuleService interface {

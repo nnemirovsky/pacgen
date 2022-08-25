@@ -4,8 +4,8 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/nnemirovsky/pacgen/pkg/logutil"
 	"os"
-	"pacgen/pkg/logutil"
 	"strings"
 )
 
