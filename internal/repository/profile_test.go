@@ -52,10 +52,10 @@ func TestProxyProfileRepository_GetAll_OK(t *testing.T) {
 	}
 
 	want := []model.ProxyProfile{
-		{10, "shadowsocks", model.Https, "127.0.0.1:1080"},
-		{20, "simple socks", model.Socks5, "127.0.0.1:9999"},
-		{123456789, "tor", model.Http, "localhost:9050"},
-		{1111, "some name", model.Socks4, "::1:1080"},
+		{ID: 10, Name: "shadowsocks", Type: model.Https, Address: "127.0.0.1:1080"},
+		{ID: 20, Name: "simple socks", Type: model.Socks5, Address: "127.0.0.1:9999"},
+		{ID: 123456789, Name: "tor", Type: model.Http, Address: "localhost:9050"},
+		{ID: 1111, Name: "some name", Type: model.Socks4, Address: "::1:1080"},
 	}
 
 	assert.Equal(t, got, want)

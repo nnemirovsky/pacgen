@@ -50,9 +50,9 @@ func TestRuleRepository_GetAll_OK(t *testing.T) {
 	}
 
 	want := []model.Rule{
-		{10, `^google\.com$`, &model.ProxyProfile{ID: 1}},
-		{20, `(?:^|\.)aws\.com$`, &model.ProxyProfile{ID: 2}},
-		{123456789, `^facebook\.com$`, &model.ProxyProfile{ID: 3}},
+		{ID: 10, Regex: `^google\.com$`, ProxyProfile: &model.ProxyProfile{ID: 1}},
+		{ID: 20, Regex: `(?:^|\.)aws\.com$`, ProxyProfile: &model.ProxyProfile{ID: 2}},
+		{ID: 123456789, Regex: `^facebook\.com$`, ProxyProfile: &model.ProxyProfile{ID: 3}},
 	}
 
 	assert.Equal(t, want, got)
