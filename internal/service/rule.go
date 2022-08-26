@@ -8,22 +8,13 @@ import (
 	"time"
 )
 
-type RuleRepository interface {
-	GetAll(ctx context.Context) ([]model.Rule, error)
-	GetAllWithProfiles(ctx context.Context) ([]model.Rule, error)
-	GetByID(ctx context.Context, id int) (model.Rule, error)
-	Create(ctx context.Context, rule *model.Rule) error
-	Update(ctx context.Context, rule model.Rule) error
-	Delete(ctx context.Context, id int) error
-}
-
 type RuleService struct {
 	logger  zerolog.Logger
 	repo    RuleRepository
-	pacSrvc *PACService
+	pacSrvc pacService
 }
 
-func NewRuleService(repo RuleRepository, pacSrvc *PACService, logger zerolog.Logger) *RuleService {
+func NewRuleService(repo RuleRepository, pacSrvc pacService, logger zerolog.Logger) *RuleService {
 	return &RuleService{
 		logger:  logger,
 		repo:    repo,

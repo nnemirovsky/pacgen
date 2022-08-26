@@ -8,23 +8,15 @@ import (
 	"time"
 )
 
-type ProxyProfileRepository interface {
-	GetAll(ctx context.Context) ([]model.ProxyProfile, error)
-	GetByID(ctx context.Context, id int) (model.ProxyProfile, error)
-	Create(ctx context.Context, profile *model.ProxyProfile) error
-	Update(ctx context.Context, profile model.ProxyProfile) error
-	Delete(ctx context.Context, id int) error
-}
-
 type ProxyProfileService struct {
 	logger  zerolog.Logger
 	repo    ProxyProfileRepository
-	pacSrvc *PACService
+	pacSrvc pacService
 }
 
 func NewProxyProfileService(
 	repo ProxyProfileRepository,
-	pacSrvc *PACService,
+	pacSrvc pacService,
 	logger zerolog.Logger,
 ) *ProxyProfileService {
 	return &ProxyProfileService{

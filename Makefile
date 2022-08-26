@@ -14,6 +14,12 @@ test:
 
 # --- development only ---
 
+mockgen:
+	mockgen -source=internal/service/interfaces.go \
+		-mock_names=pacService=MockPacService,RuleRepository=MockRuleRepository,ProxyProfileRepository=MockProxyProfileRepository \
+		-destination=internal/service/mock/mock.go \
+		-package=mock
+
 lint:
 	docker run --rm -it -v $(ROOT_DIR):/app -w /app golangci/golangci-lint:v1.49.0 golangci-lint run -v -E gofmt
 
