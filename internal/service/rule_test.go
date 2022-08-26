@@ -49,6 +49,44 @@ func TestRuleService_GetAll_OK(t *testing.T) {
 	assert.Equal(t, got, want)
 }
 
+func TestRuleService_GetAllWithProfiles_OK(t *testing.T) {
+	t.Parallel()
+
+	ruleSrvc, repoMock, _ := testPrepareRuleService(t)
+
+	want := []model.Rule{
+		{
+			ID:    1,
+			Regex: `^www\.google\.com$`,
+			ProxyProfile: &model.ProxyProfile{
+				ID:      1,
+				Name:    "shadowsocks",
+				Type:    model.Socks5,
+				Address: "localhost:1080",
+			},
+		},
+		{
+			ID:    2,
+			Regex: `(?:^|\.)facebook\.com$`,
+			ProxyProfile: &model.ProxyProfile{
+				ID:      2,
+				Name:    "some http proxy",
+				Type:    model.Http,
+				Address: "localhost:8080",
+			},
+		},
+	}
+
+	repoMock.EXPECT().GetAllWithProfiles(gomock.Any()).Return(want, nil)
+
+	got, err := ruleSrvc.GetAllWithProfiles(context.Background())
+	if err != nil {
+		t.Errorf("Unexpected error: %#v", err)
+	}
+
+	assert.Equal(t, got, want)
+}
+
 func TestRuleService_GetByID_OK(t *testing.T) {
 	t.Parallel()
 
