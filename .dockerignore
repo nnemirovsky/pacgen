@@ -6,3 +6,5 @@ compose.dev.yml
 compose.yml
 Dockerfile
 .dockerignore
+LICENSE
+README.md
