@@ -13,12 +13,12 @@ import (
 
 func testPrepareProxyProfileService(t *testing.T) (
 	*ProxyProfileService,
-	*mock.MockProxyProfileRepository,
-	*mock.MockPacService,
+	*mock.ProxyProfileRepository,
+	*mock.PacService,
 ) {
 	ctrl := gomock.NewController(t)
-	repoMock := mock.NewMockProxyProfileRepository(ctrl)
-	pacSrvcMock := mock.NewMockPacService(ctrl)
+	repoMock := mock.NewProxyProfileRepository(ctrl)
+	pacSrvcMock := mock.NewPacService(ctrl)
 
 	pacSrvcMock.EXPECT().GeneratePACFile(gomock.Any()).Return(nil).AnyTimes()
 

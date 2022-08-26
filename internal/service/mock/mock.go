@@ -12,31 +12,31 @@ import (
 	model "github.com/nnemirovsky/pacgen/internal/model"
 )
 
-// MockRuleRepository is a mock of RuleRepository interface.
-type MockRuleRepository struct {
+// RuleRepository is a mock of RuleRepository interface.
+type RuleRepository struct {
 	ctrl     *gomock.Controller
-	recorder *MockRuleRepositoryMockRecorder
+	recorder *RuleRepositoryMockRecorder
 }
 
-// MockRuleRepositoryMockRecorder is the mock recorder for MockRuleRepository.
-type MockRuleRepositoryMockRecorder struct {
-	mock *MockRuleRepository
+// RuleRepositoryMockRecorder is the mock recorder for RuleRepository.
+type RuleRepositoryMockRecorder struct {
+	mock *RuleRepository
 }
 
-// NewMockRuleRepository creates a new mock instance.
-func NewMockRuleRepository(ctrl *gomock.Controller) *MockRuleRepository {
-	mock := &MockRuleRepository{ctrl: ctrl}
-	mock.recorder = &MockRuleRepositoryMockRecorder{mock}
+// NewRuleRepository creates a new mock instance.
+func NewRuleRepository(ctrl *gomock.Controller) *RuleRepository {
+	mock := &RuleRepository{ctrl: ctrl}
+	mock.recorder = &RuleRepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockRuleRepository) EXPECT() *MockRuleRepositoryMockRecorder {
+func (m *RuleRepository) EXPECT() *RuleRepositoryMockRecorder {
 	return m.recorder
 }
 
 // Create mocks base method.
-func (m *MockRuleRepository) Create(ctx context.Context, rule *model.Rule) error {
+func (m *RuleRepository) Create(ctx context.Context, rule *model.Rule) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, rule)
 	ret0, _ := ret[0].(error)
@@ -44,13 +44,13 @@ func (m *MockRuleRepository) Create(ctx context.Context, rule *model.Rule) error
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockRuleRepositoryMockRecorder) Create(ctx, rule interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) Create(ctx, rule interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockRuleRepository)(nil).Create), ctx, rule)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*RuleRepository)(nil).Create), ctx, rule)
 }
 
 // Delete mocks base method.
-func (m *MockRuleRepository) Delete(ctx context.Context, id int) error {
+func (m *RuleRepository) Delete(ctx context.Context, id int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, id)
 	ret0, _ := ret[0].(error)
@@ -58,13 +58,13 @@ func (m *MockRuleRepository) Delete(ctx context.Context, id int) error {
 }
 
 // Delete indicates an expected call of Delete.
-func (mr *MockRuleRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRuleRepository)(nil).Delete), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*RuleRepository)(nil).Delete), ctx, id)
 }
 
 // GetAll mocks base method.
-func (m *MockRuleRepository) GetAll(ctx context.Context) ([]model.Rule, error) {
+func (m *RuleRepository) GetAll(ctx context.Context) ([]model.Rule, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAll", ctx)
 	ret0, _ := ret[0].([]model.Rule)
@@ -73,13 +73,13 @@ func (m *MockRuleRepository) GetAll(ctx context.Context) ([]model.Rule, error) {
 }
 
 // GetAll indicates an expected call of GetAll.
-func (mr *MockRuleRepositoryMockRecorder) GetAll(ctx interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) GetAll(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockRuleRepository)(nil).GetAll), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*RuleRepository)(nil).GetAll), ctx)
 }
 
 // GetAllWithProfiles mocks base method.
-func (m *MockRuleRepository) GetAllWithProfiles(ctx context.Context) ([]model.Rule, error) {
+func (m *RuleRepository) GetAllWithProfiles(ctx context.Context) ([]model.Rule, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAllWithProfiles", ctx)
 	ret0, _ := ret[0].([]model.Rule)
@@ -88,13 +88,13 @@ func (m *MockRuleRepository) GetAllWithProfiles(ctx context.Context) ([]model.Ru
 }
 
 // GetAllWithProfiles indicates an expected call of GetAllWithProfiles.
-func (mr *MockRuleRepositoryMockRecorder) GetAllWithProfiles(ctx interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) GetAllWithProfiles(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllWithProfiles", reflect.TypeOf((*MockRuleRepository)(nil).GetAllWithProfiles), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllWithProfiles", reflect.TypeOf((*RuleRepository)(nil).GetAllWithProfiles), ctx)
 }
 
 // GetByID mocks base method.
-func (m *MockRuleRepository) GetByID(ctx context.Context, id int) (model.Rule, error) {
+func (m *RuleRepository) GetByID(ctx context.Context, id int) (model.Rule, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", ctx, id)
 	ret0, _ := ret[0].(model.Rule)
@@ -103,13 +103,13 @@ func (m *MockRuleRepository) GetByID(ctx context.Context, id int) (model.Rule, e
 }
 
 // GetByID indicates an expected call of GetByID.
-func (mr *MockRuleRepositoryMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockRuleRepository)(nil).GetByID), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*RuleRepository)(nil).GetByID), ctx, id)
 }
 
 // Update mocks base method.
-func (m *MockRuleRepository) Update(ctx context.Context, rule model.Rule) error {
+func (m *RuleRepository) Update(ctx context.Context, rule model.Rule) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, rule)
 	ret0, _ := ret[0].(error)
@@ -117,36 +117,36 @@ func (m *MockRuleRepository) Update(ctx context.Context, rule model.Rule) error 
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockRuleRepositoryMockRecorder) Update(ctx, rule interface{}) *gomock.Call {
+func (mr *RuleRepositoryMockRecorder) Update(ctx, rule interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRuleRepository)(nil).Update), ctx, rule)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*RuleRepository)(nil).Update), ctx, rule)
 }
 
-// MockProxyProfileRepository is a mock of ProxyProfileRepository interface.
-type MockProxyProfileRepository struct {
+// ProxyProfileRepository is a mock of ProxyProfileRepository interface.
+type ProxyProfileRepository struct {
 	ctrl     *gomock.Controller
-	recorder *MockProxyProfileRepositoryMockRecorder
+	recorder *ProxyProfileRepositoryMockRecorder
 }
 
-// MockProxyProfileRepositoryMockRecorder is the mock recorder for MockProxyProfileRepository.
-type MockProxyProfileRepositoryMockRecorder struct {
-	mock *MockProxyProfileRepository
+// ProxyProfileRepositoryMockRecorder is the mock recorder for ProxyProfileRepository.
+type ProxyProfileRepositoryMockRecorder struct {
+	mock *ProxyProfileRepository
 }
 
-// NewMockProxyProfileRepository creates a new mock instance.
-func NewMockProxyProfileRepository(ctrl *gomock.Controller) *MockProxyProfileRepository {
-	mock := &MockProxyProfileRepository{ctrl: ctrl}
-	mock.recorder = &MockProxyProfileRepositoryMockRecorder{mock}
+// NewProxyProfileRepository creates a new mock instance.
+func NewProxyProfileRepository(ctrl *gomock.Controller) *ProxyProfileRepository {
+	mock := &ProxyProfileRepository{ctrl: ctrl}
+	mock.recorder = &ProxyProfileRepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockProxyProfileRepository) EXPECT() *MockProxyProfileRepositoryMockRecorder {
+func (m *ProxyProfileRepository) EXPECT() *ProxyProfileRepositoryMockRecorder {
 	return m.recorder
 }
 
 // Create mocks base method.
-func (m *MockProxyProfileRepository) Create(ctx context.Context, profile *model.ProxyProfile) error {
+func (m *ProxyProfileRepository) Create(ctx context.Context, profile *model.ProxyProfile) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, profile)
 	ret0, _ := ret[0].(error)
@@ -154,13 +154,13 @@ func (m *MockProxyProfileRepository) Create(ctx context.Context, profile *model.
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockProxyProfileRepositoryMockRecorder) Create(ctx, profile interface{}) *gomock.Call {
+func (mr *ProxyProfileRepositoryMockRecorder) Create(ctx, profile interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockProxyProfileRepository)(nil).Create), ctx, profile)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*ProxyProfileRepository)(nil).Create), ctx, profile)
 }
 
 // Delete mocks base method.
-func (m *MockProxyProfileRepository) Delete(ctx context.Context, id int) error {
+func (m *ProxyProfileRepository) Delete(ctx context.Context, id int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, id)
 	ret0, _ := ret[0].(error)
@@ -168,13 +168,13 @@ func (m *MockProxyProfileRepository) Delete(ctx context.Context, id int) error {
 }
 
 // Delete indicates an expected call of Delete.
-func (mr *MockProxyProfileRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
+func (mr *ProxyProfileRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockProxyProfileRepository)(nil).Delete), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*ProxyProfileRepository)(nil).Delete), ctx, id)
 }
 
 // GetAll mocks base method.
-func (m *MockProxyProfileRepository) GetAll(ctx context.Context) ([]model.ProxyProfile, error) {
+func (m *ProxyProfileRepository) GetAll(ctx context.Context) ([]model.ProxyProfile, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAll", ctx)
 	ret0, _ := ret[0].([]model.ProxyProfile)
@@ -183,13 +183,13 @@ func (m *MockProxyProfileRepository) GetAll(ctx context.Context) ([]model.ProxyP
 }
 
 // GetAll indicates an expected call of GetAll.
-func (mr *MockProxyProfileRepositoryMockRecorder) GetAll(ctx interface{}) *gomock.Call {
+func (mr *ProxyProfileRepositoryMockRecorder) GetAll(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockProxyProfileRepository)(nil).GetAll), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*ProxyProfileRepository)(nil).GetAll), ctx)
 }
 
 // GetByID mocks base method.
-func (m *MockProxyProfileRepository) GetByID(ctx context.Context, id int) (model.ProxyProfile, error) {
+func (m *ProxyProfileRepository) GetByID(ctx context.Context, id int) (model.ProxyProfile, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", ctx, id)
 	ret0, _ := ret[0].(model.ProxyProfile)
@@ -198,13 +198,13 @@ func (m *MockProxyProfileRepository) GetByID(ctx context.Context, id int) (model
 }
 
 // GetByID indicates an expected call of GetByID.
-func (mr *MockProxyProfileRepositoryMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
+func (mr *ProxyProfileRepositoryMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockProxyProfileRepository)(nil).GetByID), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*ProxyProfileRepository)(nil).GetByID), ctx, id)
 }
 
 // Update mocks base method.
-func (m *MockProxyProfileRepository) Update(ctx context.Context, profile model.ProxyProfile) error {
+func (m *ProxyProfileRepository) Update(ctx context.Context, profile model.ProxyProfile) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, profile)
 	ret0, _ := ret[0].(error)
@@ -212,36 +212,36 @@ func (m *MockProxyProfileRepository) Update(ctx context.Context, profile model.P
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockProxyProfileRepositoryMockRecorder) Update(ctx, profile interface{}) *gomock.Call {
+func (mr *ProxyProfileRepositoryMockRecorder) Update(ctx, profile interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockProxyProfileRepository)(nil).Update), ctx, profile)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*ProxyProfileRepository)(nil).Update), ctx, profile)
 }
 
-// MockPacService is a mock of pacService interface.
-type MockPacService struct {
+// PacService is a mock of pacService interface.
+type PacService struct {
 	ctrl     *gomock.Controller
-	recorder *MockPacServiceMockRecorder
+	recorder *PacServiceMockRecorder
 }
 
-// MockPacServiceMockRecorder is the mock recorder for MockPacService.
-type MockPacServiceMockRecorder struct {
-	mock *MockPacService
+// PacServiceMockRecorder is the mock recorder for PacService.
+type PacServiceMockRecorder struct {
+	mock *PacService
 }
 
-// NewMockPacService creates a new mock instance.
-func NewMockPacService(ctrl *gomock.Controller) *MockPacService {
-	mock := &MockPacService{ctrl: ctrl}
-	mock.recorder = &MockPacServiceMockRecorder{mock}
+// NewPacService creates a new mock instance.
+func NewPacService(ctrl *gomock.Controller) *PacService {
+	mock := &PacService{ctrl: ctrl}
+	mock.recorder = &PacServiceMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockPacService) EXPECT() *MockPacServiceMockRecorder {
+func (m *PacService) EXPECT() *PacServiceMockRecorder {
 	return m.recorder
 }
 
 // GeneratePACFile mocks base method.
-func (m *MockPacService) GeneratePACFile(ctx context.Context) error {
+func (m *PacService) GeneratePACFile(ctx context.Context) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GeneratePACFile", ctx)
 	ret0, _ := ret[0].(error)
@@ -249,7 +249,7 @@ func (m *MockPacService) GeneratePACFile(ctx context.Context) error {
 }
 
 // GeneratePACFile indicates an expected call of GeneratePACFile.
-func (mr *MockPacServiceMockRecorder) GeneratePACFile(ctx interface{}) *gomock.Call {
+func (mr *PacServiceMockRecorder) GeneratePACFile(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GeneratePACFile", reflect.TypeOf((*MockPacService)(nil).GeneratePACFile), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GeneratePACFile", reflect.TypeOf((*PacService)(nil).GeneratePACFile), ctx)
 }

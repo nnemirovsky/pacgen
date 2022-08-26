@@ -11,10 +11,10 @@ import (
 	"testing"
 )
 
-func testPrepareRuleService(t *testing.T) (*RuleService, *mock.MockRuleRepository, *mock.MockPacService) {
+func testPrepareRuleService(t *testing.T) (*RuleService, *mock.RuleRepository, *mock.PacService) {
 	ctrl := gomock.NewController(t)
-	repoMock := mock.NewMockRuleRepository(ctrl)
-	pacSrvcMock := mock.NewMockPacService(ctrl)
+	repoMock := mock.NewRuleRepository(ctrl)
+	pacSrvcMock := mock.NewPacService(ctrl)
 
 	pacSrvcMock.EXPECT().GeneratePACFile(gomock.Any()).Return(nil).AnyTimes()
 
