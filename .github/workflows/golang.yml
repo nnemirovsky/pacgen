@@ -1,6 +1,12 @@
 name: Test and lint code
 
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
