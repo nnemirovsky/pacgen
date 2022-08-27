@@ -45,7 +45,11 @@ func ValidateJSONBody(next http.Handler) http.Handler {
 			middleware.GetLogEntry(r).Panic(err, debug.Stack())
 			return
 		}
-		//r.Body.Close()
+		if err := r.Body.Close(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			middleware.GetLogEntry(r).Panic(err, debug.Stack())
+			return
+		}
 
 		if !json.Valid(body) {
 			if err := render.Render(w, r, BadRequestResponse("Invalid JSON")); err != nil {
