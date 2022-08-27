@@ -54,9 +54,9 @@ func (p *ProxyProfileR) FromModel(profile model.ProxyProfile) {
 }
 
 type ProxyProfileCU struct {
-	Name    string `json:"name"`
-	Type    string `json:"type"`
-	Address string `json:"address"`
+	Name    string `json:"name" validate:"required"`
+	Type    string `json:"type" validate:"required,oneof=HTTP http HTTPS https SOCKS4 socks4 SOCKS5 socks5"`
+	Address string `json:"address" validate:"required"`
 }
 
 func (p *ProxyProfileCU) ToModel() (model.ProxyProfile, error) {

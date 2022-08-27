@@ -1,23 +1,13 @@
 package handler
 
 import (
-	"context"
 	"fmt"
 	"github.com/go-chi/render"
 	"github.com/nnemirovsky/pacgen/internal/errs"
-	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/nnemirovsky/pacgen/pkg/rest"
 	"github.com/rs/zerolog"
 	"net/http"
 )
-
-type ProxyProfileService interface {
-	GetAll(ctx context.Context) ([]model.ProxyProfile, error)
-	GetByID(ctx context.Context, id int) (model.ProxyProfile, error)
-	Create(ctx context.Context, profile *model.ProxyProfile) error
-	Update(ctx context.Context, profile model.ProxyProfile) error
-	Delete(ctx context.Context, id int) error
-}
 
 type ProxyProfileHandler struct {
 	logger  zerolog.Logger
@@ -122,12 +112,6 @@ func (h *ProxyProfileHandler) Update(w http.ResponseWriter, r *http.Request) {
 	profileModel.ID = id
 
 	if err := h.service.Update(r.Context(), profileModel); err != nil {
-		if _, ok := err.(*errs.EntityNotFoundError); ok {
-			h.logger.Debug().Err(err).Send()
-			Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)
-			return
-		}
-
 		switch err.(type) {
 		case *errs.EntityAlreadyExistsError:
 			h.logger.Debug().Err(err).Send()
@@ -154,12 +138,6 @@ func (h *ProxyProfileHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.service.Delete(r.Context(), id); err != nil {
-		if _, ok := err.(*errs.EntityNotFoundError); ok {
-			h.logger.Debug().Err(err).Send()
-			Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)
-			return
-		}
-
 		switch err.(type) {
 		case *errs.EntityNotFoundError:
 			h.logger.Debug().Err(err).Send()

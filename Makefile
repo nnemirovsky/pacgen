@@ -16,8 +16,12 @@ test:
 
 mockgen:
 	mockgen -source=internal/service/interfaces.go \
-		-mock_names=pacService=MockPacService,RuleRepository=MockRuleRepository,ProxyProfileRepository=MockProxyProfileRepository \
+		-mock_names=pacService=PacService,RuleRepository=RuleRepository,ProxyProfileRepository=ProxyProfileRepository \
 		-destination=internal/service/mock/mock.go \
+		-package=mock
+	mockgen -source=internal/handler/interfaces.go \
+		-mock_names=RuleService=RuleService,ProxyProfileService=ProxyProfileService \
+		-destination=internal/handler/mock/mock.go \
 		-package=mock
 
 lint:

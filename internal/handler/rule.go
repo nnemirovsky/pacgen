@@ -1,24 +1,13 @@
 package handler
 
 import (
-	"context"
 	"fmt"
 	"github.com/go-chi/render"
 	"github.com/nnemirovsky/pacgen/internal/errs"
-	"github.com/nnemirovsky/pacgen/internal/model"
 	"github.com/nnemirovsky/pacgen/pkg/rest"
 	"github.com/rs/zerolog"
 	"net/http"
 )
-
-type RuleService interface {
-	GetAll(ctx context.Context) ([]model.Rule, error)
-	GetAllWithProfiles(ctx context.Context) ([]model.Rule, error)
-	GetByID(ctx context.Context, id int) (model.Rule, error)
-	Create(ctx context.Context, profile *model.Rule) error
-	Update(ctx context.Context, profile model.Rule) error
-	Delete(ctx context.Context, id int) error
-}
 
 type RuleHandler struct {
 	logger  zerolog.Logger
@@ -84,7 +73,9 @@ func (h *RuleHandler) Create(w http.ResponseWriter, r *http.Request) {
 
 	ruleModel, err := rule.ToModel()
 	if err != nil {
-		h.logger.Error().Err(err).Msg("Error occurred while converting rule entity to corresponding model")
+		h.logger.Debug().Err(err).Msg("Error occurred while converting rule entity to corresponding model")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		return
 	}
 
 	err = h.service.Create(r.Context(), &ruleModel)
@@ -115,7 +106,9 @@ func (h *RuleHandler) Update(w http.ResponseWriter, r *http.Request) {
 
 	ruleModel, err := rule.ToModel()
 	if err != nil {
-		h.logger.Error().Err(err).Msg("Error occurred while converting rule entity to corresponding model")
+		h.logger.Debug().Err(err).Msg("Error occurred while converting rule entity to corresponding model")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		return
 	}
 	ruleModel.ID = id
 
@@ -125,12 +118,12 @@ func (h *RuleHandler) Update(w http.ResponseWriter, r *http.Request) {
 		Render(w, r, rest.ConflictResponse(err.Error()), h.logger)
 		return
 	}
+	if _, ok := err.(*errs.EntityNotFoundError); ok {
+		h.logger.Debug().Err(err).Send()
+		Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)
+		return
+	}
 	if err != nil {
-		if _, ok := err.(*errs.EntityNotFoundError); ok {
-			h.logger.Debug().Err(err).Send()
-			Render(w, r, rest.NotFoundResponse(err.Error()), h.logger)
-			return
-		}
 		h.logger.Error().Err(err).Msg("Error occurred while updating rule")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
