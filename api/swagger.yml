@@ -9,6 +9,7 @@ produces:
   - application/json
 schemes:
   - http
+basePath: /api/v1
 paths:
   /rules:
     get:
