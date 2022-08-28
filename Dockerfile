@@ -1,9 +1,9 @@
 FROM golang:alpine AS build
 WORKDIR /app
 COPY . .
-RUN apk add --no-cache build-base
-RUN go mod download
-RUN make build
+RUN apk add --no-cache build-base && \
+    go mod download && \
+    make build
 
 
 
