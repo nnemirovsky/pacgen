@@ -1,0 +1,293 @@
+swagger: "2.0"
+info:
+  title: PacGen
+  description: pacgen api
+  version: 1.0.0
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+paths:
+  /rules:
+    get:
+      tags:
+        - rules
+      responses:
+        200:
+          description: list of rules
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/rule_read"
+    post:
+      tags:
+        - rules
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/rule_create_update"
+      responses:
+        201:
+          description: rule created
+          headers:
+            Location:
+              type: string
+              format: uri
+              description: url of the created rule
+        409:
+          description: there is no proxy profile with the given id
+          schema:
+            $ref: "#/definitions/error"
+        422:
+          description: validation error
+  /rules/{id}:
+    get:
+      tags:
+        - rules
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+      responses:
+        200:
+          description: rule found
+          schema:
+            type: object
+            $ref: "#/definitions/rule_read"
+        404:
+          description: rule not found
+          schema:
+            $ref: "#/definitions/error"
+    put:
+      tags:
+        - rules
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          description: id of the rule to update
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/rule_create_update"
+      responses:
+        204:
+          description: rule updated
+        400:
+          description: invalid path parameter
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: rule not found
+          schema:
+            $ref: "#/definitions/error"
+        422:
+          description: validation error
+    delete:
+      tags:
+        - rules
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          description: id of the rule to delete
+      responses:
+        204:
+          description: rule deleted
+        404:
+          description: rule not found
+          schema:
+            $ref: "#/definitions/error"
+  /profiles:
+    get:
+      tags:
+        - profiles
+      responses:
+        200:
+          description: list of profiles
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/proxy_profile_read"
+    post:
+      tags:
+        - profiles
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/proxy_profile_create_update"
+      responses:
+        201:
+          description: profile created
+          headers:
+            Location:
+              type: string
+              format: uri
+              description: url of the created profile
+        409:
+          description: there is already a profile with the given name
+          schema:
+            $ref: "#/definitions/error"
+        422:
+          description: validation error
+  /profiles/{id}:
+    get:
+      tags:
+        - profiles
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          description: id of the profile to get
+      responses:
+        200:
+          description: profile found
+          schema:
+            type: object
+            $ref: "#/definitions/proxy_profile_read"
+        400:
+          description: invalid path parameter
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: profile not found
+          schema:
+            $ref: "#/definitions/error"
+    put:
+      tags:
+        - profiles
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          description: id of the profile to update
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/proxy_profile_create_update"
+      responses:
+        204:
+          description: profile updated
+        400:
+          description: invalid path parameter
+          schema:
+            $ref: "#/definitions/error"
+    delete:
+      tags:
+        - profiles
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          format: int64
+          required: true
+          description: id of the profile to delete
+      responses:
+        204:
+          description: profile deleted
+        400:
+          description: invalid path parameter
+          schema:
+            $ref: "#/definitions/error"
+        404:
+          description: profile not found
+          schema:
+            $ref: "#/definitions/error"
+definitions:
+  proxy_profile_read:
+    type: object
+    required:
+      - id
+      - name
+      - type
+      - address
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      type:
+        type: string
+        enum:
+          - socks5
+          - socks4
+          - http
+          - https
+      address:
+        type: string
+  proxy_profile_create_update:
+    type: object
+    required:
+      - name
+      - type
+      - address
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+        enum:
+          - socks5
+          - socks4
+          - http
+          - https
+      address:
+        type: string
+  rule_read:
+    type: object
+    required:
+      - id
+      - regexp
+      - proxy_profile_id
+    properties:
+      id:
+        type: integer
+        format: int64
+      regexp:
+        type: string
+        minLength: 1
+      proxy_profile_id:
+        type: integer
+        format: int64
+  rule_create_update:
+    type: object
+    required:
+      - domain
+      - mode
+      - proxy_profile_id
+    properties:
+      domain:
+        type: string
+        minLength: 1
+      mode:
+        type: string
+        enum:
+          - domain
+          - domain_and_subdomains
+      proxy_profile_id:
+        type: integer
+        format: int64
+  error:
+    type: object
+    required:
+      - error
+    properties:
+      error:
+        type: string

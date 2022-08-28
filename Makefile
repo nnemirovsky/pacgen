@@ -14,6 +14,13 @@ test:
 
 # --- development only ---
 
+swagger_serve:
+	docker run \
+		-p 8882:8080 \
+		-e SWAGGER_JSON=/doc/swagger.yml \
+		-v $(ROOT_DIR)/api/swagger.yml:/doc/swagger.yml \
+		swaggerapi/swagger-ui
+
 mockgen:
 	mockgen -source=internal/service/interfaces.go \
 		-mock_names=pacService=PacService,RuleRepository=RuleRepository,ProxyProfileRepository=ProxyProfileRepository \
