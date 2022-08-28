@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/go-chi/render"
 	"github.com/nnemirovsky/pacgen/internal/errs"
 	"github.com/nnemirovsky/pacgen/pkg/rest"
@@ -90,7 +89,7 @@ func (h *RuleHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rest.Created(w, fmt.Sprintf("%s/%v", r.URL, ruleModel.ID))
+	rest.Created(w, r, ruleModel.ID)
 }
 
 func (h *RuleHandler) Update(w http.ResponseWriter, r *http.Request) {

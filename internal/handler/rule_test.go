@@ -187,7 +187,7 @@ func TestRuleHandler_Create_OK(t *testing.T) {
 
 	body := `{"domain":"google.com","mode":"domain","proxy_profile_id":1}`
 
-	req, err := http.NewRequest(http.MethodPost, "/rules", strings.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, "http://localhost/rules", strings.NewReader(body))
 	if err != nil {
 		t.Errorf("Unexpected error: %#v", err)
 	}
@@ -201,7 +201,7 @@ func TestRuleHandler_Create_OK(t *testing.T) {
 
 	assert.Equal(t, rr.Code, http.StatusCreated)
 
-	assert.Equal(t, rr.Header().Get("Location"), "/rules/"+strconv.Itoa(insertedID))
+	assert.Equal(t, rr.Header().Get("Location"), "http://localhost/rules/"+strconv.Itoa(insertedID))
 }
 
 func TestRuleHandler_Create_UnprocessableEntity(t *testing.T) {

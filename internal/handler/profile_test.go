@@ -189,7 +189,7 @@ func TestProxyProfileHandler_Create_OK(t *testing.T) {
 
 	body := `{"name":"shadowsocks","type":"SOCKS5","address":"localhost:1080"}`
 
-	req, err := http.NewRequest(http.MethodPost, "/rules", strings.NewReader(body))
+	req, err := http.NewRequest(http.MethodPost, "http://localhost/rules", strings.NewReader(body))
 	if err != nil {
 		t.Errorf("Unexpected error: %#v", err)
 	}
@@ -203,7 +203,7 @@ func TestProxyProfileHandler_Create_OK(t *testing.T) {
 
 	assert.Equal(t, rr.Code, http.StatusCreated)
 
-	assert.Equal(t, rr.Header().Get("Location"), "/rules/17")
+	assert.Equal(t, rr.Header().Get("Location"), "http://localhost/rules/17")
 }
 
 func TestProxyProfileHandler_Create_UnprocessableEntity(t *testing.T) {

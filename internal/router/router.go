@@ -40,7 +40,6 @@ func New(
 }
 
 func initMiddlewares(router *chi.Mux, logger zerolog.Logger, basicAuthCreds map[string]string) {
-	router.Use(rest.URLFixer)
 	router.Use(hlog.NewHandler(logger))
 	router.Use(hlog.RequestIDHandler("request-id", "X-Request-Id"))
 	router.Use(hlog.URLHandler("url"))

@@ -1,13 +1,20 @@
 package rest
 
 import (
+	"fmt"
 	"github.com/go-chi/render"
 	"net/http"
+	url2 "net/url"
 )
 
-// Created returns an HTTP 201 Created response with Location header set to the given path.
-func Created(w http.ResponseWriter, path string) {
-	w.Header().Set("Location", path)
+// Created returns an HTTP 201 Created response with Location header set to the corresponding url.
+func Created(w http.ResponseWriter, r *http.Request, id any) {
+	url := url2.URL{
+		Scheme: GetScheme(r),
+		Host:   GetHost(r),
+		Path:   fmt.Sprintf("%s/%v", GetPath(r), id),
+	}
+	w.Header().Set("Location", url.String())
 	w.WriteHeader(http.StatusCreated)
 }
 

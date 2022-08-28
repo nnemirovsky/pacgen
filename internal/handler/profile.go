@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/go-chi/render"
 	"github.com/nnemirovsky/pacgen/internal/errs"
 	"github.com/nnemirovsky/pacgen/pkg/rest"
@@ -89,7 +88,7 @@ func (h *ProxyProfileHandler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rest.Created(w, fmt.Sprintf("%s/%v", r.URL, profileModel.ID))
+	rest.Created(w, r, profileModel.ID)
 }
 
 func (h *ProxyProfileHandler) Update(w http.ResponseWriter, r *http.Request) {

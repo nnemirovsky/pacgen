@@ -10,36 +10,36 @@ import (
 
 var fakeHandler = http.HandlerFunc(func(http.ResponseWriter, *http.Request) {})
 
-func TestURLFixer(t *testing.T) {
-	t.Parallel()
-
-	req, err := http.NewRequest(http.MethodGet, "/rules", nil)
-	req.Host = "localhost:8080"
-	if err != nil {
-		t.Errorf("Unexpected error: %#v", err)
-	}
-
-	req2, err := http.NewRequest(http.MethodGet, "/rules", nil)
-	req2.Host = "localhost:8080"
-	req2.Header.Set("X-Forwarded-Proto", "https")
-	if err != nil {
-		t.Errorf("Unexpected error: %#v", err)
-	}
-
-	rr := httptest.NewRecorder()
-	rr2 := httptest.NewRecorder()
-
-	fixer := URLFixer(fakeHandler)
-
-	fixer.ServeHTTP(rr, req)
-	fixer.ServeHTTP(rr2, req2)
-
-	assert.Equal(t, req.URL.Host, req.Host)
-	assert.Equal(t, req.URL.Scheme, "http")
-
-	assert.Equal(t, req2.URL.Host, req2.Host)
-	assert.Equal(t, req2.URL.Scheme, "https")
-}
+//func TestURLFixer(t *testing.T) {
+//	t.Parallel()
+//
+//	req, err := http.NewRequest(http.MethodGet, "/rules", nil)
+//	req.Host = "localhost:8080"
+//	if err != nil {
+//		t.Errorf("Unexpected error: %#v", err)
+//	}
+//
+//	req2, err := http.NewRequest(http.MethodGet, "/rules", nil)
+//	req2.Host = "localhost:8080"
+//	req2.Header.Set("X-Forwarded-Proto", "https")
+//	if err != nil {
+//		t.Errorf("Unexpected error: %#v", err)
+//	}
+//
+//	rr := httptest.NewRecorder()
+//	rr2 := httptest.NewRecorder()
+//
+//	fixer := URLFixer(fakeHandler)
+//
+//	fixer.ServeHTTP(rr, req)
+//	fixer.ServeHTTP(rr2, req2)
+//
+//	assert.Equal(t, req.URL.Host, req.Host)
+//	assert.Equal(t, req.URL.Scheme, "http")
+//
+//	assert.Equal(t, req2.URL.Host, req2.Host)
+//	assert.Equal(t, req2.URL.Scheme, "https")
+//}
 
 func TestValidateJSONBody_OK(t *testing.T) {
 	t.Parallel()

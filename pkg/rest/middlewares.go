@@ -14,23 +14,32 @@ import (
 	"runtime/debug"
 )
 
-func URLFixer(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r.URL.Scheme = "http"
-		if r.TLS != nil {
-			r.URL.Scheme = "https"
-		}
-		if v := r.Header.Get("X-Forwarded-Proto"); v != "" {
-			r.URL.Scheme = v
-		}
-
-		if r.URL.Host == "" {
-			r.URL.Host = r.Host
-		}
-
-		next.ServeHTTP(w, r)
-	})
-}
+//func URLFixer(next http.Handler) http.Handler {
+//	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+//		r.URL.Scheme = "http"
+//		if r.TLS != nil {
+//			r.URL.Scheme = "https"
+//		}
+//		if v := r.Header.Get("X-Forwarded-Proto"); v != "" {
+//			r.URL.Scheme = v
+//		}
+//
+//		if r.URL.Host == "" {
+//			r.URL.Host = r.Host
+//		}
+//		if v := r.Header.Get("X-Forwarded-Host"); v != "" {
+//			r.URL.Host = v
+//		}
+//
+//		if v := r.Header.Get("X-Forwarded-Prefix"); v != "" {
+//			r.RequestURI = v + r.RequestURI
+//			r.URL.RawPath
+//			r.URL.RawPath = v + r.URL.Path
+//		}
+//
+//		next.ServeHTTP(w, r)
+//	})
+//}
 
 func ValidateJSONBody(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
