@@ -10,6 +10,8 @@ produces:
 schemes:
   - http
 basePath: /api/v1
+security:
+  - basicAuth: [ ]
 paths:
   /rules:
     get:
