@@ -3,8 +3,8 @@ version: "3.9"
 services:
   server:
     build: .
-    ports:
-      - "127.0.0.1:8889:8080"
+    #    ports:
+    #      - "127.0.0.1:8881:8080"
     volumes:
       - ./data:/app/data
     environment:
@@ -12,9 +12,14 @@ services:
       APP_LOG_LEVEL: "debug"
       APP_USER: "admin"
       APP_PASSWORD: "password"
+    labels:
+      - "traefik.http.routers.server.rule=Host(`localhost`) && PathPrefix(`/api/v1`)"
+      - "traefik.http.middlewares.server-strip.stripPrefix.prefixes=/api/v1"
+      - "traefik.http.routers.server.middlewares=server-strip"
+      - "traefik.http.services.server.loadbalancer.server.port=8080"
     restart: unless-stopped
     depends_on:
-      db_migration:
+      db-migration:
         condition: service_completed_successfully
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:$${APP_PORT}/ping" ]
@@ -22,9 +27,47 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
-
-  db_migration:
+  db-migration:
     build: .
     command: "./migrator up"
     volumes:
       - ./data:/app/data
+  swagger:
+    image: swaggerapi/swagger-ui:latest
+    #    ports:
+    #      - "127.0.0.1:8882:8080"
+    volumes:
+      - ./api/swagger.yml:/doc/swagger.yml
+    environment:
+      SWAGGER_JSON: /doc/swagger.yml
+    labels:
+      - "traefik.http.routers.swagger.rule=Host(`localhost`) && PathPrefix(`/api/swagger/`)"
+      - "traefik.http.middlewares.swagger-strip.stripPrefix.prefixes=/api/swagger"
+      - "traefik.http.routers.swagger.middlewares=swagger-strip"
+      - "traefik.http.services.swagger.loadbalancer.server.port=8080"
+    restart: unless-stopped
+    depends_on:
+      - server
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/swagger.yml" ]
+      interval: 1m
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  proxy:
+    image: traefik:latest
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+    #      - "--providers.docker.exposedbydefault=false"
+    #      - "--entrypoints.web.address=:80"
+    ports:
+      - "127.0.0.1:8081:8080"
+      - "127.0.0.1:8082:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - server
+      - swagger
+    restart: unless-stopped
