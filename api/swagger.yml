@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   title: PacGen
-  description: pacgen api
+  description: PAC file generator, provides access to simple REST API for managing proxy profiles and routing rules
   version: 1.0.0
 consumes:
   - application/json
