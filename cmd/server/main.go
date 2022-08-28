@@ -32,7 +32,9 @@ var (
 	pacService     *service.PACService
 	ruleHandler    *handler.RuleHandler
 	profileHandler *handler.ProxyProfileHandler
+	pacFileHandler *handler.PACFileHandler
 	mux            http.Handler
+	pacFilePath    = "./data/proxy.pac"
 )
 
 type options struct {
@@ -65,16 +67,17 @@ func main() {
 }
 
 func initRouter() {
-	mux = router.New(ruleHandler, profileHandler, logger, map[string]string{opts.User: opts.Password})
+	mux = router.New(ruleHandler, profileHandler, pacFileHandler, logger, map[string]string{opts.User: opts.Password})
 }
 
 func initHandlers() {
 	ruleHandler = handler.NewRuleHandler(ruleService, logutil.WithLayer[handler.RuleHandler](logger))
 	profileHandler = handler.NewProxyProfileHandler(profileService, logutil.WithLayer[handler.ProxyProfileHandler](logger))
+	pacFileHandler = handler.NewPACFileHandler(pacFilePath, logutil.WithLayer[handler.PACFileHandler](logger))
 }
 
 func initServices() {
-	pacService = service.NewPACService(ruleRepo, logutil.WithLayer[service.PACService](logger))
+	pacService = service.NewPACService(ruleRepo, pacFilePath, logutil.WithLayer[service.PACService](logger))
 	ruleService = service.NewRuleService(ruleRepo, pacService, logutil.WithLayer[service.RuleService](logger))
 	profileService = service.NewProxyProfileService(profileRepo, pacService, logutil.WithLayer[service.ProxyProfileService](logger))
 }

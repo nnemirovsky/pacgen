@@ -13,9 +13,7 @@ services:
       APP_USER: "admin"
       APP_PASSWORD: "password"
     labels:
-      - "traefik.http.routers.server.rule=Host(`localhost`) && PathPrefix(`/api/v1`)"
-      - "traefik.http.middlewares.server-strip.stripPrefix.prefixes=/api/v1"
-      - "traefik.http.routers.server.middlewares=server-strip"
+      - "traefik.http.routers.server.rule=Host(`localhost`)"
       - "traefik.http.services.server.loadbalancer.server.port=8080"
     restart: unless-stopped
     depends_on:
@@ -41,8 +39,8 @@ services:
     environment:
       SWAGGER_JSON: /doc/swagger.yml
     labels:
-      - "traefik.http.routers.swagger.rule=Host(`localhost`) && PathPrefix(`/api/swagger/`)"
-      - "traefik.http.middlewares.swagger-strip.stripPrefix.prefixes=/api/swagger"
+      - "traefik.http.routers.swagger.rule=Host(`localhost`) && PathPrefix(`/swagger/`)"
+      - "traefik.http.middlewares.swagger-strip.stripPrefix.prefixes=/swagger"
       - "traefik.http.routers.swagger.middlewares=swagger-strip"
       - "traefik.http.services.swagger.loadbalancer.server.port=8080"
     restart: unless-stopped

@@ -21,7 +21,7 @@ func main() {
 	}()
 
 	ruleRepo := repository.NewRuleRepository(db, logger)
-	pacSrvc := service.NewPACService(ruleRepo, logger)
+	pacSrvc := service.NewPACService(ruleRepo, "./data/proxy.pac", logger)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()

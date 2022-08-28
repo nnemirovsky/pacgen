@@ -10,14 +10,16 @@ import (
 )
 
 type PACService struct {
-	logger zerolog.Logger
-	repo   RuleRepository
+	logger   zerolog.Logger
+	repo     RuleRepository
+	filePath string
 }
 
-func NewPACService(repo RuleRepository, logger zerolog.Logger) *PACService {
+func NewPACService(repo RuleRepository, filePath string, logger zerolog.Logger) *PACService {
 	return &PACService{
-		logger: logger,
-		repo:   repo,
+		logger:   logger,
+		repo:     repo,
+		filePath: filePath,
 	}
 }
 
@@ -28,7 +30,7 @@ func (s *PACService) GeneratePACFile(ctx context.Context) error {
 		return err
 	}
 
-	if err = generatePACFile(rules); err != nil {
+	if err = generatePACFile(rules, s.filePath); err != nil {
 		s.logger.Error().Err(err).Msg("Error occurred while generating pac file")
 		return err
 	}
@@ -49,8 +51,8 @@ func generatePAC(wr io.Writer, rules []model.Rule) error {
 	return gen.Generate(wr, conditions)
 }
 
-func generatePACFile(rules []model.Rule) error {
-	file, err := os.OpenFile("data/proxy.pac", os.O_WRONLY|os.O_CREATE|os.O_TRUNC|os.O_SYNC, 0644)
+func generatePACFile(rules []model.Rule, filePath string) error {
+	file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC|os.O_SYNC, 0644)
 	if err != nil {
 		return err
 	}
